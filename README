@@ -1,0 +1,12 @@
+
+i once needed this, but didn't want to release it. now it doesn't
+matter. hope some of the code can be useful to the right people.
+
+you will need a lot of large listening routes, and fast scan sources
+(e.g. at a major IX) not subject to upstream uRPF. the point was to
+reduce the temporal / spatial locality of sources / targets in a scan.
+
+yes, the scans are lossy. this wasn't built for accuracy, but for
+large scale results.
+
+-d.
