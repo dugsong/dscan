@@ -1,0 +1,66 @@
+.\"
+.\" Copyright (c) 2002 Dug Song <dugsong@monkey.org>
+.\"
+.\" $Id: dscan.8,v 1.1 2002/11/22 04:30:48 dugsong Exp $
+.\"
+.TH DSCAN 8
+.SH NAME
+dscan \- fast, distributed TCP port scanner
+.SH SYNOPSIS
+\fBdscan\fR [\fB-lnr\fR] [\fB-b \fIbitrate\fR] [\fB-f \fIflags\fR]
+[\fB-k \fIkey\fR] [\fB-o \fIos\fR]
+.br
+      [\fB-p \fIports\fR] [\fB-s \fIsrcs\fR] \fIdsts\fR
+.SH DESCRIPTION
+.B dscan
+is a fast TCP port scanner optimized for wide, distributed scans
+(e.g. of large networks, not individual hosts).
+.LP
+The options are as follows:
+.IP \fB-l\fR
+Listen-only mode. No scan packets will be sent -- only response packets
+matching a scan with the specified key will be displayed.
+.IP \fB-n\fR
+Disable hostname lookups. By default, asynchronous hostname lookups
+are enabled for responding hosts.
+.IP \fB-r\fR
+Perform a random walk of the target port and IP space, to evenly
+distribute scan packets among them (e.g. to avoid hammering each
+target in serial).
+.IP \fB-b \fIbitrate\fR
+Specify the bottleneck bandwidth to the target. The \fIbitrate\fR
+may be specified as Kbps, Mbps, or Gbps (e.g. "56k", "1M"). If the
+specified bitrate exceeds the actual bottleneck bandwidth, the scan
+will be lossy, and produce incomplete results. The default bitrate is
+128Kbps.
+.IP \fB-f \fIflags\fR
+Specify TCP flags for each scan packet, as any combination of
+"SAFRPUWE", or "N" for no flags set. TCP SYN ("S") is enabled by
+default.
+.IP \fB-k \fIkey\fR
+Specify a secret key for this scan. In a distributed scan where the
+scanning hosts spoof the source address of the receiving host, the key
+should be the same across scanners and receivers. The key is also used
+to initialize the random number generator for reproducible results.
+.IP \fB-o \fRos\fR
+Specify an operating system TCP stack to craft scan packets
+as. Valid \fIos\fR values include "win2k", "win9x", "macos9",
+"solaris28", "solaris26", "linux242", and "openbsd28".
+.IP \fB-p \fIports\fR
+Specify ports to scan as comma-separated, optionally ranged values
+(e.g. "21-23,25,80,111,135-139") or service names
+(e.g. "ftp,ssh,smtp"). By default, all 65535 TCP ports will be
+scanned.
+.IP \fB-s \fIsrcs\fR
+Specify source addresses to spoof as comma-separated IP addresses,
+ranges, prefixes, or hostnames
+(e.g. "1.2.3.4-1.2.3.242,10.0.1/24,10.0.4.1") for use in distributed
+scans where the receiver can sniff packets destined to these
+addresses.
+.IP \fIdsts\fR
+Specify target addresses to scan as comma-separated IP addresses,
+ranges, prefixes, or hostnames
+(e.g. "192.168.0.1-192.168.1.110,10/8,1.2.3.4").
+.SH AUTHOR
+Dug Song <dugsong@monkey.org>
+
